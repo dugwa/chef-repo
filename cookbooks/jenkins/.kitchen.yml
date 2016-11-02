@@ -1,6 +1,6 @@
 ---
 driver:
-  name: vagrant
+  name: docker
 
 provisioner:
   name: chef_zero
@@ -13,12 +13,17 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-16.04
-  - name: centos-7.2
+  - name: centos-7
+    driver_config:
+      dockerfile: ./dockerfiles/centos7
+      privileged: true
+      run_command: /usr/sbin/init # Start systemd as root process
+      use_sudo: false
 
 suites:
   - name: default
     run_list:
+      - recipe[jenkins::kitchen]
       - recipe[jenkins::default]
     verifier:
       inspec_tests:
