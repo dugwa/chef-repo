@@ -1,6 +1,7 @@
 require 'spec_helper.rb'
 
 describe 'jenkins::install' do
+  run_command
   let(:chef_run) do
     ChefSpec::ServerRunner.new do
       end.converge(described_recipe)

@@ -54,7 +54,7 @@ RUN yum -y -q install openssh-server openssh-clients; \
     systemctl enable sshd.service;
 
 # Install missing standard packages and cleanup repos
-RUN yum -y -q install crontabs curl initscripts man man-pages net-tools passwd sudo tar telnet vim which iptables-services systemd-sysv openssl-devel openssl-libs openssl wget firewalld; \
+RUN yum -y -q install crontabs curl initscripts man man-pages net-tools passwd sudo tar telnet vim which iptables-services systemd-sysv openssl-devel openssl-libs openssl wget firewalld links; \
     yum clean all; \
     rm -f /etc/yum.repos.d/CentOS*; \
     rm -f /etc/yum.repos.d/systemd.repo;

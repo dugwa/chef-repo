@@ -16,3 +16,10 @@ describe port(80) do
   it { should_not be_listening }
   skip 'This is an example test, replace with your own test.'
 end
+
+%w(/etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/epel.repo).each do |f|
+  describe file(f) do
+    it { should be_file }
+    it { should be_owned_by 'root' }
+  end
+end 

@@ -7,6 +7,7 @@
 require 'spec_helper'
 
 describe 'jenkins::default' do
+  run_command
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new
