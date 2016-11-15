@@ -12,14 +12,14 @@ template '/opt/install_jenkins.sh' do
   mode   '755'
 end
 
-Chef::Log.info('installing Java 8')
+Chef::Log.info("installing Java 8")
 
 execute 'install_java' do
   command 'bash /opt/install_java.sh'
   not_if "ps -ef |pgrep java"
 end
 
-Chef::Log.info('installing Jenkins')
+Chef::Log.info("installing Jenkins")
 
 execute 'install_jenkins' do
   command 'bash /opt/install_jenkins.sh'
@@ -41,7 +41,7 @@ execute 'open jenkins port' do
 end
 
 if File.exists?('/usr/lib/jenkins')
-  Chef::Log.info('Jenkins installation complete')
+  Chef::Log.info("Jenkins installation complete")
 else
-  Chef::Log.fatal('Jenkins installation failed !!!')
+  Chef::Log.fatal("Jenkins installation failed !!!")
 end
