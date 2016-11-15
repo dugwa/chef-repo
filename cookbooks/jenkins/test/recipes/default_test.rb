@@ -23,3 +23,10 @@ end
     it { should be_owned_by 'root' }
   end
 end 
+
+%w(java jenkins).each do |proc|
+  describe processes(proc) do
+    its('list.length') { should eq 1 }
+    its('users') { should eq ['jenkins'] }
+  end
+end
