@@ -1,0 +1,28 @@
+# hostname <%= node['fqdn'] %>
+#
+#
+########################################################################################
+#
+#    ###   #   #  #####  #####
+#   #   #  #   #  #      #
+#   #      #   #  #      #
+#   #      #####  ####   ####
+#   #      #   #  #      #
+#   #   #  #   #  #      #
+#    ###   #   #  #####  #
+#
+# This file is managed by CHEF. Do not edit locally
+#
+########################################################################################
+# Source: jenkins::templates/default/jenkins.sh.erb
+########################################################################################
+
+#!/bin/bash
+
+yum install wget -y
+
+wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+
+rpm --import http://pkg.jenkins-ci.org/redhat-stable/jenkins-ci.org.key
+
+yum --enablerepo=jenkins install <%= node['jenkins']['package']['jenkins']['version'] %> -y
