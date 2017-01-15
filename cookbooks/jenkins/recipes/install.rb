@@ -35,13 +35,9 @@ service 'jenkins.service' do
   action [ :enable, :start ]
 end
 
-service 'firewalld.service' do
-  supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
-end
-
-execute 'open jenkins port' do
-  command 'firewall-cmd --zone=public --permanent --add-port=8080/tcp && firewall-cmd --reload'
+# open default jenkins port of 8080 via iptables
+iptables_rule 'http_8080' do
+  lines '-A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080'
 end
 
 log 'you have just successfully installed jenkins' do
