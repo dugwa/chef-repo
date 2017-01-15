@@ -37,7 +37,7 @@ end
 
 # open default jenkins port of 8080 via iptables
 iptables_rule 'http_8080' do
-  lines '-A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080'
+  lines 'A FWR -p tcp -m tcp --dport 8080 -j ACCEPT'
 end
 
 log 'you have just successfully installed jenkins' do
