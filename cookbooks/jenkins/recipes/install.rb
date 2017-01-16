@@ -36,9 +36,12 @@ service 'jenkins.service' do
 end
 
 # open default jenkins port of 8080 via iptables
-iptables_rule 'http_8080' do
-  lines 'A FWR -p tcp -m tcp --dport 8080 -j ACCEPT'
+execute 'open http port for jenkins' do
+  ['firewall-cmd --zone=public --add-port=8080/tcp --permanent', 'firewall-cmd --zone=public --add-service=http --permanent', 'firewall-cmd --reload'].each do |commands|
+    command "#{commands}"
+  end
 end
+
 
 log 'you have just successfully installed jenkins' do
   level :info
