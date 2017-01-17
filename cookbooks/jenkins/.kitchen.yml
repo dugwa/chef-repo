@@ -26,7 +26,7 @@ suites:
       - recipe[iptables::default]
       - recipe[jenkins::kitchen]
       - recipe[jenkins::default]
-      - recipe[jenkins::rsync]
+      - recipe[jenkins::packages]
     verifier:
       inspec_tests:
         - test/recipes
