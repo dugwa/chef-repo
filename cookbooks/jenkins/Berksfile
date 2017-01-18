@@ -1,3 +1,5 @@
 source 'https://supermarket.chef.io'
 
+cookbook "rails", git: "ssh://git@github.com:dugwa/chef-repo.git", rel: 'cookbooks/rails'
+
 metadata
