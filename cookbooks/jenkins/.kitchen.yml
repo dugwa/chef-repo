@@ -27,6 +27,7 @@ suites:
       - recipe[jenkins::default]
       - recipe[jenkins::packages]
       - recipe[rails::rbenv]
+      - recipe[rails::ruby]
     verifier:
       inspec_tests:
         - test/recipes
