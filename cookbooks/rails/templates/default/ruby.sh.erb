@@ -14,14 +14,14 @@
 # This file is managed by CHEF. Do not edit locally
 #
 ########################################################################################
-# Source: jenkins::templates/default/java.sh.erb
+# Source: rails::templates/default/ruby.sh.erb
 ########################################################################################
 
 #!/bin/bash
 
-rbenv install <%= ['rails']['package']['ruby']['version'] %>
+rbenv install <%= node['rails']['package']['ruby']['version'] %>
 
-rbenv install <%= ['rails']['package']['ruby']['global_version'] %>
+rbenv install <%= node['rails']['package']['ruby']['global_version'] %>
 
 sleep 5 
 
