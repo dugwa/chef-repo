@@ -5,7 +5,7 @@ template '/opt/install_rbenv.sh' do
   mode   '755'
 end
 
-log 'starting installation of rbenv' do
+log 'starting installation of ruby on rails' do
   level :info
 end
 
@@ -14,6 +14,7 @@ execute 'install_rbenv' do
   user 'jenkins'
 end
 
-log 'finished installation of rbenv' do
+log 'finished installation of ruby on rails' do
   level :info
 end
+

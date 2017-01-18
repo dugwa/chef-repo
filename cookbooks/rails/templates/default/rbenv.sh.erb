@@ -39,4 +39,15 @@ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-buil
 echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
 exec $SHELL
 
+
+rbenv install <%= node['rails']['package']['ruby']['version'] %>
+
+rbenv install <%= node['rails']['package']['ruby']['global_version'] %>
+
+sleep 5
+
+echo "gem: --no-document" > ~/.gemrc
+
+gem install bundle
+
 exit 0
