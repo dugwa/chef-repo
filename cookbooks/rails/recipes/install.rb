@@ -42,7 +42,7 @@ bash 'install_rbenv' do
   code <<-EOH
   cd /var/lib/jenkins
   git clone git://github.com/sstephenson/rbenv.git /var/lib/jenkins/.rbenv
-  echo 'export PATH="/var/lib/jenkins/.rbenv/bin:$PATH"' >> /var/lib/jenkin/.bash_profile
+  echo 'export PATH="/var/lib/jenkins/.rbenv/bin:${PATH}"' >> /var/lib/jenkin/.bash_profile
   echo 'eval "$(rbenv init -)"' >> /var/lib/jenkins/.bash_profile
   exec /bin/bash
   source /var/lib/jenkins/.bash_profile
