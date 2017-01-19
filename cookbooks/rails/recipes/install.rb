@@ -9,19 +9,18 @@ log 'starting installation of rails pre-requisites' do
   level :info
 end
 
-execute 'rails pre-requisites' do
-  %w(git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel epel-release nodejs).each do |pkgs|
-  command "sed -i \'s/false/bash/g\' file.txt"
-    command "yum install -y #{pkgs}"
-  end
-end  
-
 # enable jenkins login
 bash 'jenkins shell login' do
   code <<-EOH
   sed -i 's/false/bash/g' /etc/passwd
   EOH
 end
+
+execute 'rails pre-requisites' do
+  %w(git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel epel-release nodejs).each do |pkgs|
+    command "yum install -y #{pkgs}"
+  end
+end  
 
 log 'starting installation of ruby on rails' do
   level :info
