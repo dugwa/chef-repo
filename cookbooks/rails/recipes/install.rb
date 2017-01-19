@@ -15,14 +15,41 @@ execute 'install_rsync and openssh-clients' do
   end
 end  
 
+# enable jenkins login
+bash 'jenkins shell login' do
+  code <<-EOH
+  sed -i 's/false/bash/g' /etc/passwd
+  EOH
+end
+
 log 'starting installation of ruby on rails' do
   level :info
 end
 
-execute 'install_rbenv' do
-  command 'bash /opt/install_rbenv.sh'
+bash 'install_rbenv' do
+  cwd '/var/lib/jenkins'
   user 'jenkins'
+  code <<-EOH
+  git clone git://github.com/sstephenson/rbenv.git .rbenv
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+  echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+  exec $SHELL
+  source .bash_profile
+  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+  echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
+  exec $SHELL
+  sleep 5
+  source .bash_profile
+  rbenv install -v 2.2.1
+  rbenv global 2.2.1
+  EOH
 end
+
+
+#execute 'install_rbenv' do
+ # command 'bash /opt/install_rbenv.sh'
+#  user 'jenkins'
+#end
 
 log 'finished installation of ruby on rails' do
   level :info
