@@ -9,8 +9,9 @@ log 'starting installation of rails pre-requisites' do
   level :info
 end
 
-execute 'install_rsync and openssh-clients' do
-  %w(git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel nodejs).each do |pkgs|
+execute 'rails pre-requisites' do
+  %w(git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel epel-release nodejs).each do |pkgs|
+  command "sed -i \'s/false/bash/g\' file.txt"
     command "yum install -y #{pkgs}"
   end
 end  
