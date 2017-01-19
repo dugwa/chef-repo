@@ -17,10 +17,19 @@ bash 'jenkins shell login' do
 end
 
 execute 'rails pre-requisites' do
-  %w(git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel epel-release nodejs).each do |pkgs|
+  %w(git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel).each do |pkgs|
     command "yum install -y #{pkgs}"
   end
 end  
+
+# install nodejs
+bash 'install nodejs' do
+  code <<-EOH
+  cd ~
+  wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
+  sudo tar --strip-components 1 -xzvf node-v* -C /usr/local
+  EOH
+end
 
 log 'starting installation of ruby on rails' do
   level :info
