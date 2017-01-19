@@ -16,11 +16,11 @@ bash 'jenkins shell login' do
   EOH
 end
 
-execute 'rails pre-requisites' do
-  %w(git zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel).each do |pkgs|
-    command "yum install -y #{pkgs}"
-  end
-end  
+%w(git zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel).each do |pkgs|
+  yum_package pkgs do
+    action :install
+  end   
+end
 
 # install nodejs
 bash 'install nodejs' do
