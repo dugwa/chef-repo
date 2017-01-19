@@ -25,8 +25,9 @@ end
 # install nodejs
 bash 'install nodejs' do
   code <<-EOH
-  cd ~
+  cd /opt
   wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
+  cwd '/opt'
   sudo tar --strip-components 1 -xzvf node-v* -C /usr/local
   EOH
 end
@@ -36,9 +37,9 @@ log 'starting installation of ruby on rails' do
 end
 
 bash 'install_rbenv' do
-  cwd '/var/lib/jenkins'
   user 'jenkins'
   code <<-EOH
+  cd /var/lib/jenkins
   git clone git://github.com/sstephenson/rbenv.git .rbenv
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
   echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
