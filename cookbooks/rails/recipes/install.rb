@@ -35,6 +35,8 @@ log 'starting installation of ruby on rails' do
   level :info
 end
 
+
+PATH = "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin"
 bash 'install_rbenv' do
   user 'jenkins'
   code <<-EOH
@@ -46,7 +48,7 @@ bash 'install_rbenv' do
   source /var/lib/jenkins/.bash_profile
   cd /var/lib/jenkins
   git clone git://github.com/sstephenson/ruby-build.git /var/lib/jenkins/.rbenv/plugins/ruby-build
-  echo 'export PATH="/var/lib/jenkins/.rbenv/plugins/ruby-build/bin:$PATH"' >> /var/lib/jenkins/.bash_profile
+  echo 'export PATH="/var/lib/jenkins/.rbenv/plugins/ruby-build/bin:${PATH}"' >> /var/lib/jenkins/.bash_profile
   exec /bin/bash
   sleep 5
   source /var/lib/jenkins/.bash_profile
