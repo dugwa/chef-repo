@@ -16,7 +16,7 @@ bash 'jenkins shell login' do
   EOH
 end
 
-%w(git zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel).each do |pkgs|
+%w(git-core ezlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel).each do |pkgs|
   yum_package pkgs do
     action :install
   end   
@@ -40,17 +40,18 @@ bash 'install_rbenv' do
   code <<-EOH
   cd /var/lib/jenkins
   git clone git://github.com/sstephenson/rbenv.git /var/lib/jenkins/.rbenv
-  echo 'export PATH="/var/lib/jenkins/.rbenv/bin:$PATH"' >> ~/.bash_profile
+  echo 'export PATH="/var/lib/jenkins/.rbenv/bin:$PATH"' >> /var/lib/jenkin/.bash_profile
   echo 'eval "$(rbenv init -)"' >> /var/lib/jenkins/.bash_profile
-  exec $SHELL
+  exec /bin/bash
   source /var/lib/jenkins/.bash_profile
+  cd /var/lib/jenkins
   git clone git://github.com/sstephenson/ruby-build.git /var/lib/jenkins/.rbenv/plugins/ruby-build
   echo 'export PATH="/var/lib/jenkins/.rbenv/plugins/ruby-build/bin:$PATH"' >> /var/lib/jenkins/.bash_profile
-  exec $SHELL
+  exec /bin/bash
   sleep 5
   source /var/lib/jenkins/.bash_profile
-  rbenv install -v 2.2.1
-  rbenv global 2.2.1
+  /var/lib/jenkins/.rbenv/bin/rbenv install -v 2.2.1
+  /var/lib/jenkins/.rbenv/bin/rbenv global 2.2.1
   EOH
 end
 
