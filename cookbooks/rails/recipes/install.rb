@@ -16,7 +16,7 @@ bash 'jenkins shell login' do
   EOH
 end
 
-%w(git-core ezlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel).each do |pkgs|
+%w(git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel).each do |pkgs|
   yum_package pkgs do
     action :install
   end   
