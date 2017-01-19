@@ -36,23 +36,23 @@ log 'starting installation of ruby on rails' do
 end
 
 
-PATH = "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin"
+#PATH = "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin"
 bash 'install_rbenv' do
   user 'jenkins'
   code <<-EOH
   cd /var/lib/jenkins
   git clone git://github.com/sstephenson/rbenv.git /var/lib/jenkins/.rbenv
-  echo 'export PATH="/var/lib/jenkins/.rbenv/bin:${PATH}"' >> /var/lib/jenkin/.bash_profile
+  echo 'export PATH="/var/lib/jenkins/.rbenv/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin"' >> /var/lib/jenkin/.bash_profile
   echo 'eval "$(rbenv init -)"' >> /var/lib/jenkins/.bash_profile
   exec /bin/bash
   source /var/lib/jenkins/.bash_profile
   cd /var/lib/jenkins
   git clone git://github.com/sstephenson/ruby-build.git /var/lib/jenkins/.rbenv/plugins/ruby-build
-  echo 'export PATH="/var/lib/jenkins/.rbenv/plugins/ruby-build/bin:${PATH}"' >> /var/lib/jenkins/.bash_profile
+  echo 'export PATH="/var/lib/jenkins/.rbenv/plugins/ruby-build/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin"' >> /var/lib/jenkins/.bash_profile
   exec /bin/bash
-  sleep 5
   source /var/lib/jenkins/.bash_profile
   /var/lib/jenkins/.rbenv/bin/rbenv install -v 2.2.1
+  sleep 5
   /var/lib/jenkins/.rbenv/bin/rbenv global 2.2.1
   EOH
 end
