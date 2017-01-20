@@ -46,6 +46,12 @@ bash 'install_rbenv' do
   echo 'eval "$(rbenv init -)"' >> /var/lib/jenkins/.bash_profile
   exec /bin/bash
   source /var/lib/jenkins/.bash_profile
+  EOH
+end
+
+bash 'install ruby' do
+  user 'jenkins'
+  code <<-EOH
   cd /var/lib/jenkins
   git clone git://github.com/sstephenson/ruby-build.git /var/lib/jenkins/.rbenv/plugins/ruby-build
   echo 'export PATH="/var/lib/jenkins/.rbenv/plugins/ruby-build/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin"' >> /var/lib/jenkins/.bash_profile
