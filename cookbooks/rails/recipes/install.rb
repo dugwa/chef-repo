@@ -27,7 +27,11 @@ bash 'install nodejs' do
   code <<-EOH
   cd /opt
   wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
-  sudo tar --strip-components 1 -xzvf /opt/node-v0.10.30-linux-x64.tar.gz -C /usr/local
+  tar xzvf node-v0.10.30-linux-x64.tar.gz 
+  cd /opt/node-v*
+  ./configure
+  make
+  sudo make install
   EOH
 end
 
