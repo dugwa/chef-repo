@@ -28,7 +28,7 @@ bash 'install nodejs' do
   cd /opt
   wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
   tar xzvf node-v0.10.30-linux-x64.tar.gz 
-  cd /opt/node-v0.10.30-linux-x64.tar.gz
+  cd /opt/node-v0.10.30-linux-x64
   ./configure
   make
   sudo make install
