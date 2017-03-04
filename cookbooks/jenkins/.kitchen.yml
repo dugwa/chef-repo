@@ -26,7 +26,6 @@ suites:
       - recipe[jenkins::kitchen]
       - recipe[jenkins::default]
       - recipe[jenkins::packages]
-      - recipe[rails::install]
     verifier:
       inspec_tests:
         - test/recipes
