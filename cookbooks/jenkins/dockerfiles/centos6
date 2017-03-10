@@ -1,0 +1,42 @@
+# Defines Docker image suitable for testing cookbooks on CentOS 7.
+#
+# This handles a number of idiosyncrasies with systemd so it can be
+# run as the root process of the container, making it behave like a
+# normal VM but without the overhead.
+FROM centos:centos6
+
+# Set the user var
+ENV user kitchen
+
+# Set chef version
+ENV CHEF_VERSION 12.7.2-1.el6
+
+# Add the docker public key to the auth keys for the user
+ADD .kitchen/docker_id_rsa.pub /tmp/docker.pub
+
+# Set up the user with passwordless sudo and direct ssh
+RUN useradd -d /home/kitchen -m -s /bin/bash kitchen; \
+    (echo kitchen:kitchen | chpasswd); \
+    mkdir -p /etc/sudoers.d; \
+    echo "kitchen ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/kitchen; \
+    chmod 0440 /etc/sudoers.d/kitchen; \
+    [ ! -d /home/kitchen/.ssh ] && mkdir /home/kitchen/.ssh; \
+    chown -R kitchen /home/kitchen/.ssh; \
+    chmod 0700 /home/kitchen/.ssh; \
+    cat /tmp/docker.pub >> /home/kitchen/.ssh/authorized_keys; \
+    chown kitchen /home/kitchen/.ssh/authorized_keys; \
+    chmod 0600 /home/kitchen/.ssh/authorized_keys; \
+    rm -f /tmp/docker.pub;
+
+# Setup SSH daemon so test-kitchen can access the container
+RUN yum -y -q install openssh-server openssh-clients; \
+    ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''; \
+    ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''; \
+    echo 'OPTIONS="-o UseDNS=no -o UsePAM=no -o PasswordAuthentication=yes -o UsePrivilegeSeparation=no"' >> /etc/sysconfig/sshd; \
+    /etc/init.d/sshd start
+
+# Install necessary packages 
+RUN yum -y -q install crontabs tar telnet vim nc sudo
+
+# install Chef
+RUN curl -L https://www.opscode.com/chef/install.sh | bash

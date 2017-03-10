@@ -1,8 +1,7 @@
 #install necessary packages
 
-execute 'install_rsync and openssh-clients' do
-  %w(rsync openssh-clients git nc telnet).each do |pkg|
+%w(rsync openssh-clients git nc telnet).each do |pkg|
+  execute 'packages' do
     command "yum install -y #{pkg}"
-  end 
+  end
 end
-

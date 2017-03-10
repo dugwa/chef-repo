@@ -19,14 +19,31 @@ platforms:
       privileged: true
       run_command: /usr/sbin/init # Start systemd as root process
       use_sudo: false
+    run_list:
+      - recipe[jenkins::kitchen]
+      - recipe[jenkins::packages]
+
+  - name: centos-6
+    driver_config:
+      dockerfile: ./dockerfiles/centos6
+      privileged: true
+      use_sudo: false
+    run_list:
+      - recipe[jenkins::packages]
 
 suites:
   - name: default
     run_list:
-      - recipe[jenkins::kitchen]
       - recipe[jenkins::default]
-      - recipe[jenkins::packages]
     verifier:
       inspec_tests:
         - test/recipes
+    attributes:
+
+  - name: iti
+    run_list:
+    #  - recipe[jenkins::iti]
+    verifier:
+      inspec_tests:
+        - test/recipes/iti_test.rb
     attributes:
