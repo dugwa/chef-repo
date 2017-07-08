@@ -9,7 +9,7 @@ FROM centos
 ENV user kitchen
 
 # Set chef version
-ENV CHEF_VERSION 12.7.2-1.el7
+ENV CHEF_VERSION 12.19.36-1.el7
 
 # Systemd needs to be able to access cgroups (why? .. because)
 VOLUME /sys/fs/cgroup
@@ -62,4 +62,6 @@ RUN yum -y -q install crontabs curl initscripts man man-pages net-tools passwd s
 RUN sed -i '\#<include if_selinux_enabled="yes" selinux_root_relative="yes">contexts/dbus_contexts</include>#d' /etc/dbus-1/system.conf
 RUN sed -i '\#<include if_selinux_enabled="yes" selinux_root_relative="yes">contexts/dbus_contexts</include>#d' /etc/dbus-1/session.conf
 
-RUN curl -L https://www.opscode.com/chef/install.sh | bash
+# Install Chef
+RUN curl -s https://packages.chef.io/files/stable/chef/12.19.36/el/7/chef-${CHEF_VERSION}.x86_64.rpm > /tmp/chef-${CHEF_VERSION}.x86_64.rpm; \
+	yum -y -q install /tmp/chef-${CHEF_VERSION}.x86_64.rpm;
